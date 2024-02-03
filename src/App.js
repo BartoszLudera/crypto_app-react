@@ -36,7 +36,7 @@ function App() {
   return (
     <ThemeProvider>
       <Navbar />
-      {loading ? (
+      {/* {loading ? (
         <Loading />
       ) : error ? (
         <div className="flex flex-col items-center justify-center h-screen">
@@ -45,8 +45,9 @@ function App() {
         </div>
       ) : (
         <CoinList />
-      )}
+      )} */}
       <Routes>
+        <Route path='/' element={<CoinList />} />
         <Route path='/coin/:coinId' element={<CoinDetail />} />
       </Routes>
     </ThemeProvider>
