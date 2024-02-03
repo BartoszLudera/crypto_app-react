@@ -24,7 +24,7 @@ const Navbar = () => {
     //   };
 
     return (
-        <div className='rounded-div flex items-center justify-between h-20 font-bold'>
+        <div className='rounded-div flex items-center justify-between h-20 font-bold mb-4'>
             <Link to='/' className='flex flex-row items-center'>
                 <img src={logoImg} className='h-16' />
                 <h1 className='text-2xl'>Cryptoapp</h1>

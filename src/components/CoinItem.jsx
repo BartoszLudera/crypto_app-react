@@ -10,16 +10,16 @@ const CoinItem = ({ coin }) => {
     const favCoins = useSelector(state => state.coin.favCoins);
 
     const [savedCoin, setSavedCoin] = useState(favCoins.includes(coin.id));
-
     const saveCoin = () => {
         dispatch(coinActions.saveLikedCoin(coin.id));
         setSavedCoin(!savedCoin);
     };
 
+
     return (
         <tr className='h-[80px] border-b overflow-hidden'>
             <td onClick={saveCoin}>
-                {savedCoin ? <AiFillStar /> : <AiOutlineStar />}
+                {savedCoin ? <AiFillStar size={18}/> : <AiOutlineStar size={18}/>} 
             </td>
             <td>{coin.market_cap_rank}</td>
             <td>
@@ -34,7 +34,7 @@ const CoinItem = ({ coin }) => {
                     </div>
                 </Link>
             </td>
-            <td>{coin.symbol.toUpperCase()}</td>
+            <td className='font-bold'>{coin.symbol.toUpperCase()}</td>
             <td>${coin.current_price.toLocaleString()}</td>
             <td>
                 {coin.price_change_percentage_24h > 0 ? (
@@ -53,7 +53,7 @@ const CoinItem = ({ coin }) => {
             <td className='w-[180px] hidden sm:table-cell'>
                 ${coin.market_cap.toLocaleString()}
             </td>
-            <td>
+             <td>
                 <Sparklines data={coin.sparkline_in_7d.price}>
                     <SparklinesLine color={coin.price_change_percentage_24h > 0 ? 'green' : 'red'} />
                 </Sparklines>

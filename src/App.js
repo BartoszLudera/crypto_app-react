@@ -1,49 +1,54 @@
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import CoinList from "./components/CoinList";
 import { coinActions } from "./store/coin-slice";
 import Loading from "./components/Loading";
+import jsonResponse from "./staticResponse/response.json";
+import { Routes, Route } from "react-router";
+import CoinDetail from "./routers/CoinDetial";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const coins = useSelector((state) => state.coin.coins);
+  // const coins = useSelector((state) => state.coin.coins);
   const dispatch = useDispatch();
 
-  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=btc&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en";
+  const loadData = async () => {
+    try {
+      // Simulating API response delay with setTimeout (replace with actual fetch logic)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      dispatch(coinActions.setCoins(jsonResponse));
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        dispatch(coinActions.setCoins(response.data)); // Dispatch the setCoins action
-        setLoading(false);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, [dispatch, url]);
+    loadData();
+  }, [dispatch]);
 
   return (
     <ThemeProvider>
       <Navbar />
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : error ? (
         <div className="flex flex-col items-center justify-center h-screen">
-    <p>Error: {error}</p>
-    <p>Coingeco API isn't working, try again after a couple of minutes...</p>
-</div>
-
+          <p>Error: {error}</p>
+          <p>Failed to load data from JSON file. Please try again.</p>
+        </div>
       ) : (
-        <CoinList coins={coins} />
+        <CoinList />
       )}
+      <Routes>
+        <Route path='/coin/:coinId' element={<CoinDetail />} />
+      </Routes>
     </ThemeProvider>
   );
 }
