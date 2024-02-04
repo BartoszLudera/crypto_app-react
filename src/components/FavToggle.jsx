@@ -16,10 +16,10 @@ export default function FavToggle() {
 
     return (
         <div>
-            <button onClick={toggleFavCoinsUnvisible} className={`bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl ${favCoinsVisible ? '' : 'bg-green-500'}`}>
+            <button onClick={toggleFavCoinsUnvisible} className={`text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl ${favCoinsVisible ? 'bg-primary text-primary' : 'bg-button'}`}>
                 All
             </button>
-            <button onClick={toggleFavCoinsVisible} className={`bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl ${favCoinsVisible ? 'bg-green-500' : ''}`}>
+            <button onClick={toggleFavCoinsVisible} className={` text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl ${favCoinsVisible ? 'bg-button' : 'bg-primary text-primary'}`}>
                 Favourite
             </button>
         </div>

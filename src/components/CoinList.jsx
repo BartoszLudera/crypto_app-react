@@ -23,7 +23,7 @@ export default function CoinList() {
   return (
     <div className="mx-10 border-2 rounded-2xl rounded-div shadow-3xl shadow-dark">
       <Trending />
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between ">
         <FavToggle />
         <SearchField />
       </div>
