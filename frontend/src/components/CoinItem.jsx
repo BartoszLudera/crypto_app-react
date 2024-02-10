@@ -7,20 +7,43 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 const CoinItem = ({ coin }) => {
     const dispatch = useDispatch();
-    const favCoins = useSelector(state => state.coin.favCoins);
+    const isLogged = useSelector(state => state.coin.isLogged);
+    const token = useSelector(state => state.coin.token); // Token from Redux store
 
-    const [savedCoin, setSavedCoin] = useState(favCoins.includes(coin.id));
+    const [savedCoin, setSavedCoin] = useState(false);
+
     const saveCoin = () => {
-        dispatch(coinActions.saveLikedCoin(coin.id));
-        setSavedCoin(!savedCoin);
+        fetch('http://localhost:3000/api/add-to-favorites', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Use token from Redux store
+            },
+            body: JSON.stringify({ item: coin.id })
+        })
+        .then(response => {
+            if (response.ok) {
+                setSavedCoin(true);
+            }
+        })
+        .catch(error => {
+            console.error('Error saving favorite coin:', error, token);
+        });
     };
-
 
     return (
         <tr className='h-[80px] border-b overflow-hidden'>
-            <td onClick={saveCoin}>
-                {savedCoin ? <AiFillStar size={18}/> : <AiOutlineStar size={18}/>} 
-            </td>
+            {isLogged ? (
+                <td onClick={saveCoin}>
+                    {savedCoin ? <AiFillStar size={18} /> : <AiOutlineStar size={18} />}
+                </td>
+            ) : (
+                <td>
+                    <Link to='/signup'>
+                        {savedCoin ? <AiFillStar size={18} /> : <AiOutlineStar size={18} />}
+                    </Link>
+                </td>
+            )}
             <td>{coin.market_cap_rank}</td>
             <td>
                 <Link to={`/coin/${coin.id}`}>
@@ -53,7 +76,7 @@ const CoinItem = ({ coin }) => {
             <td className='w-[180px] hidden sm:table-cell'>
                 ${coin.market_cap.toLocaleString()}
             </td>
-             <td>
+            <td>
                 <Sparklines data={coin.sparkline_in_7d.price}>
                     <SparklinesLine color={coin.price_change_percentage_24h > 0 ? 'green' : 'red'} />
                 </Sparklines>

@@ -8,6 +8,9 @@ import Loading from "./components/Loading";
 import jsonResponse from "./staticResponse/response.json";
 import { Routes, Route } from "react-router";
 import CoinDetail from "./routers/CoinDetial";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Test from "./components/Test";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -34,23 +37,36 @@ function App() {
   }, [dispatch]);
 
   return (
+    // <ThemeProvider>
+    //   <Navbar />
+    //   {/* {loading ? (
+    //     <Loading />
+    //   ) : error ? (
+    //     <div className="flex flex-col items-center justify-center h-screen">
+    //       <p>Error: {error}</p>
+    //       <p>Failed to load data from JSON file. Please try again.</p>
+    //     </div>
+    //   ) : (
+    //     <CoinList />
+    //   )} */}
+    //   <Routes>
+    //     <Route path='/' element={<CoinList />} />
+    //     <Route path='/coin/:coinId' element={<CoinDetail />} />
+    //     <Route path='/signin' element={<Login/>}/>
+    //     <Route path='/signup' element={<Register/>}/>
+    //   </Routes>
+    // </ThemeProvider>
     <ThemeProvider>
       <Navbar />
-      {/* {loading ? (
-        <Loading />
-      ) : error ? (
-        <div className="flex flex-col items-center justify-center h-screen">
-          <p>Error: {error}</p>
-          <p>Failed to load data from JSON file. Please try again.</p>
-        </div>
-      ) : (
-        <CoinList />
-      )} */}
       <Routes>
         <Route path='/' element={<CoinList />} />
         <Route path='/coin/:coinId' element={<CoinDetail />} />
+        <Route path='/signin' element={<Login/>} />
+        <Route path='/signup' element={<Register />} />
       </Routes>
     </ThemeProvider>
+
+    
   );
 }
 

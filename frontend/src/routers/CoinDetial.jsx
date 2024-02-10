@@ -43,10 +43,20 @@ const CoinDetail = () => {
                             <h1 className="text-6xl">{coin.name}</h1>
                         </div>
                         <p dangerouslySetInnerHTML={{ __html: coin.description && coin.description.en }} />
+                        <hr className="my-6"></hr>
                         <div>
                             <Sparklines data={coin.market_data?.sparkline_7d?.price || []}>
                                 <SparklinesLine color='teal' />
                             </Sparklines>
+                        </div>
+                        <hr className="my-6"></hr>
+                        <div className="pb-10">
+                        <h2>Symbol: {coin.symbol.toUpperCase()}</h2>
+                        <h2>Web Slug: {coin.web_slug}</h2>
+                        <h2>Block Time (minutes): {coin.block_time_in_minutes}</h2>
+                        <h2>Hashing Algorithm: {coin.hashing_algorithm}</h2>
+                        <h2>Categories: {coin.categories.join(", ")}</h2>
+                        <h2>Market Cap Rank: {coin.market_cap_rank}</h2>
                         </div>
                     </>
                 ) : (
