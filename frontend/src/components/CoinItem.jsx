@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { coinActions } from '../store/coin-slice';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
+import axios from 'axios';
 
 const CoinItem = ({ coin }) => {
     const dispatch = useDispatch();
@@ -12,24 +13,29 @@ const CoinItem = ({ coin }) => {
 
     const [savedCoin, setSavedCoin] = useState(false);
 
+
+
     const saveCoin = () => {
-        fetch('http://localhost:3000/api/add-to-favorites', {
-            method: 'POST',
+        axios.post('http://localhost:3000/api/add-to-favorites', { item: coin.id,
+    username: localStorage.username  }, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Use token from Redux store
-            },
-            body: JSON.stringify({ item: coin.id })
-        })
-        .then(response => {
-            if (response.ok) {
-                setSavedCoin(true);
+                'Authorization': `Bearer ${localStorage.token}`
             }
         })
-        .catch(error => {
-            console.error('Error saving favorite coin:', error, token);
-        });
+            .then(response => {
+                if (response.status === 200) {
+                    setSavedCoin(true);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving favorite coin:', error, localStorage.token);
+            });
     };
+
+    
+
+ 
 
     return (
         <tr className='h-[80px] border-b overflow-hidden'>

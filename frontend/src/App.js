@@ -10,7 +10,8 @@ import { Routes, Route } from "react-router";
 import CoinDetail from "./routers/CoinDetial";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Test from "./components/Test";
+import axios from 'axios';
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,19 +22,22 @@ function App() {
 
   const loadData = async () => {
     try {
-      // Simulating API response delay with setTimeout (replace with actual fetch logic)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      dispatch(coinActions.setCoins(jsonResponse));
-      setLoading(false);
+      const response = await axios.get('http://localhost:3000/api/data/currencies');
+      // Dispatch actions or update state with response.data
+      dispatch(coinActions.setCoins(response.data));
+      setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
-      setError(error.message);
-      setLoading(false);
+      console.error('An error occurred while fetching data:', error);
+      setError(error); // Set error state if an error occurs
+      setLoading(false); // Set loading to false to indicate data loading is complete
     }
   };
 
 
   useEffect(() => {
-    loadData();
+    loadData(); // Load data initially
+    const interval = setInterval(loadData, 30000);
+    return () => clearInterval(interval); // Clean up interval on component unmount
   }, [dispatch]);
 
   return (

@@ -23,7 +23,9 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
+                const username = data.username
                 localStorage.setItem('token', token);
+                localStorage.setItem('username',username);
                 setError('');
                 window.location.href = '/'; // Redirect to the main path
             } else {

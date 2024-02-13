@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { useSelector } from 'react-redux'; // Corrected import
+import { Link } from 'react-router-dom';
 
 const Trending = () => {
   const [trending, setTrending] = useState([]);
@@ -39,7 +40,7 @@ const Trending = () => {
               key={idx}
               className="rounded-div flex justify-between p-4 hover:scale-105 ease-in-out duration-300"
             >
-              <div className="flex w-full items-center justify-between">
+              <Link to={`/coin/${coin.item.id}`} className="flex w-full items-center justify-between">
                 <div className="flex">
                   <img
                     className="mr-4 rounded-full"
@@ -59,7 +60,7 @@ const Trending = () => {
                   />
                   <p>{coin.item.price_btc.toFixed(7)}</p>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
