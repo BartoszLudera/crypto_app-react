@@ -29,33 +29,33 @@ function Register() {
 
     return (
         <div className='rounded-div'>
-        <Link to={'/'} className="flex flex-row align-center mb-4">
+            <Link to={'/'} className="flex flex-row align-center mb-4">
                 <IoIosArrowBack size={24} />
                 <p className="underline ml-2 text-md">Back to all coin</p>
-        </Link>
-        <div className="flex justify-center hidden:rounded-div p-10">
-            <div className="w-full max-w-xs">
-                <h2 className="text-center mb-4 text-3xl">Create new account</h2>
-                <form onSubmit={handleSubmit}>
-                    <label className="block mb-4">
-                        User name:
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full px-3 py-2 rounded border" required />
-                    </label>
-                    <label className="block mb-4">
-                        Password:
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 rounded border" required />
-                    </label>
-                    <button type="submit" className="w-full bg-button hover:bg-button text-btnText hover:border-secondary font-bold py-2 px-4 rounded">
-                        Create account
-                    </button>
-                </form>
-                {message && <p className="mt-4">{message}</p>}
+            </Link>
+            <div className="flex justify-center hidden:rounded-div p-10">
+                <div className="w-full max-w-xs">
+                    <h2 className="text-center mb-4 text-3xl">Create new account</h2>
+                    <form onSubmit={handleSubmit}>
+                        <label className="block mb-4">
+                            User name:
+                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full px-3 py-2 rounded border" required />
+                        </label>
+                        <label className="block mb-4">
+                            Password:
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 rounded border" required />
+                        </label>
+                        <button type="submit" className="w-full bg-button hover:bg-button text-btnText hover:border-secondary font-bold py-2 px-4 rounded">
+                            Create account
+                        </button>
+                    </form>
+                    {message && <p className="mt-4">{message}</p>}
+                </div>
             </div>
-        </div>
-        <Link to={'/signin'} className="flex flex-row align-center justify-center mb-4">
-            <IoIosLogIn size={24} />
-            <p className="underline ml-2 text-md">Have account? Let's log in!</p>
-        </Link>
+            <Link to={'/signin'} className="flex flex-row align-center justify-center mb-4">
+                <IoIosLogIn size={24} />
+                <p className="underline ml-2 text-md">Have account? Let's log in!</p>
+            </Link>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const coinSlice = createSlice({
     name: 'coin',
-    initialState: { coins: [], favCoins: [], favCoinsVisible: false, isLogged: false },
+    initialState: { coins: [], favCoins: [], favCoinsVisible: false, isLogged: false, savedCoin: false },
     reducers: {
         setCoins(state, action) {
             state.coins = action.payload;
@@ -31,7 +31,11 @@ const coinSlice = createSlice({
         },
         toogleIsLogout(state){
             state.isLogged = false;
+        },
+        saveCoinState(state, action) {
+            state.savedCoin = action.payload;
         }
+        
         
     },
 });

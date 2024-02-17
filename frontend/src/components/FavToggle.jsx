@@ -3,17 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { coinActions } from "../store/coin-slice";
 import { Link } from "react-router-dom";
 
-export default function FavToggle() {
+export default function FavToggle({fetchFavCoins}) {
     const dispatch = useDispatch();
     const favCoinsVisible = useSelector(state => state.coin.favCoinsVisible);
     const isLogged = useSelector(state => state.coin.isLogged);
 
     const toggleFavCoinsVisible = () => {
         dispatch(coinActions.favCoinsVisible());
+        fetchFavCoins();
     };
 
     const toggleFavCoinsUnvisible = () => {
         dispatch(coinActions.favCoinsUnvisible());
+        fetchFavCoins();
     };
 
     return (

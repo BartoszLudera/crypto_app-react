@@ -6,41 +6,49 @@ import { coinActions } from '../store/coin-slice';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import axios from 'axios';
 
-const CoinItem = ({ coin }) => {
+const CoinItem = ({ coin}) => {
     const dispatch = useDispatch();
     const isLogged = useSelector(state => state.coin.isLogged);
-    const token = useSelector(state => state.coin.token); // Token from Redux store
+    // const token = useSelector(state => state.coin.token); // Token from Redux store
 
     const [savedCoin, setSavedCoin] = useState(false);
 
 
 
-    const saveCoin = () => {
-        axios.post('http://localhost:3000/api/add-to-favorites', { item: coin.id,
-    username: localStorage.username  }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.token}`
+    const toogleFavCoin = async () => {
+        try {
+            if (savedCoin) {
+                // Remove fav coin
+                await axios.post("http://localhost:3000/api/favorites/remove", {
+                    username: localStorage.getItem("username"), // Pobierz nazwę użytkownika z localStorage
+                    coinId: coin.id // Przekaż ID coina
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+            } else {
+                // Add fav coin
+                await axios.post("http://localhost:3000/api/favorites/add", {
+                    username: localStorage.getItem("username"), // Pobierz nazwę użytkownika z localStorage
+                    coinId: coin.id // Przekaż ID coina
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
             }
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    setSavedCoin(true);
-                }
-            })
-            .catch(error => {
-                console.error('Error saving favorite coin:', error, localStorage.token);
-            });
+            setSavedCoin(!savedCoin);
+        } catch (error) {
+            console.error("Error toggling favorite coin:", error);
+        }
     };
-
-    
-
  
 
     return (
         <tr className='h-[80px] border-b overflow-hidden'>
             {isLogged ? (
-                <td onClick={saveCoin}>
+                <td onClick={toogleFavCoin}>
                     {savedCoin ? <AiFillStar size={18} /> : <AiOutlineStar size={18} />}
                 </td>
             ) : (
