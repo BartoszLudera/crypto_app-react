@@ -6,38 +6,34 @@ import FavToggle from "./FavToggle";
 import SearchField from "./SearchField";
 import Trending from "./Trending";
 import axios from "axios";
+import PriceNote from "./PriceNote";
 
 export default function CoinList() {
   const coins = useSelector((state) => state.coin.coins);
+  const isLogged = useSelector(state => state.coin.isLogged);
   const favCoinsVisible = useSelector((state) => state.coin.favCoinsVisible);
   const [favCoins, setFavCoins] = useState([]);
   const [selectedCoins, setSelectedCoins] = useState([]);
 
-
-
   const fetchFavCoins = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "http://localhost:3000/api/favorites",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-  
+      const response = await axios.get("http://localhost:3000/api/favorites", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const favoriteCoins = response.data;
       setFavCoins(favoriteCoins); // Ustawianie stanu favCoins po pobraniu ulubionych monet
-  
+
       // Filtrowanie obiektów coins, których id znajduje się w tablicy favCoins
-      const filteredCoins = coins.filter(coin => favCoins.includes(coin.id));
+      const filteredCoins = coins.filter((coin) => favCoins.includes(coin.id));
       setSelectedCoins(filteredCoins);
     } catch (error) {
       console.error("Error fetching favorite coins:", error);
     }
   };
-  
 
   useEffect(() => {
     fetchFavCoins();
@@ -46,11 +42,12 @@ export default function CoinList() {
   return (
     <div className="mx-10 border-2 rounded-2xl rounded-div shadow-3xl shadow-dark">
       <Trending />
-      <div className="flex flex-row justify-between ">
-        <FavToggle fetchFavCoins={fetchFavCoins} />
-        {/* <SearchField /> */}
+      <div className=" mb-8">
+        <PriceNote isLogged={isLogged}/>
       </div>
-      <Table coins={favCoinsVisible ? selectedCoins : coins} />
+      <div className="rounded-div">
+        <Table coins={favCoinsVisible ? selectedCoins : coins} />
+      </div>
     </div>
   );
 }

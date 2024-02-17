@@ -23,7 +23,7 @@ export default function Table({ coins }) {
       <table className="w-full border-collapse text-center mt-5">
         <thead>
           <tr className='border-b'>
-            <th></th>
+            {/* <th></th> */}
             <th className='px-4'>#</th>
             <th className='text-left'>Coin</th>
             <th></th>

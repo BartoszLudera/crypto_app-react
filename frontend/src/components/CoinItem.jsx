@@ -47,7 +47,7 @@ const CoinItem = ({ coin}) => {
 
     return (
         <tr className='h-[80px] border-b overflow-hidden'>
-            {isLogged ? (
+            {/* {isLogged ? (
                 <td onClick={toogleFavCoin}>
                     {savedCoin ? <AiFillStar size={18} /> : <AiOutlineStar size={18} />}
                 </td>
@@ -57,7 +57,7 @@ const CoinItem = ({ coin}) => {
                         {savedCoin ? <AiFillStar size={18} /> : <AiOutlineStar size={18} />}
                     </Link>
                 </td>
-            )}
+            )} */}
             <td>{coin.market_cap_rank}</td>
             <td>
                 <Link to={`/coin/${coin.id}`}>

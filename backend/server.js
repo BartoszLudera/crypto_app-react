@@ -118,18 +118,41 @@ app.post('/api/login', async (req, res) => {
         res.status(500).send('Error logging in.');
     }
 });
-// Endpoint do pobierania ulubionych coinów użytkownika
-// app.get('/api/favorites', verifyToken, async (req, res) => {
-//     const { username } = req.user;
-//     try {
-//         const [rows] = await connection.promise().execute('SELECT item FROM favorites WHERE username = ?', [username]);
-//         // const favoriteCoins = rows.map(row => row.coin_id);
-//         res.json(rows);
-//     } catch (error) {
-//         console.error('Error fetching favorite coins:', error);
-//         res.status(500).send('Error fetching favorite coins.');
-//     }
-// });
+
+app.post('/api/priceNote/add', verifyToken, async (req, res) => {
+    const { username, coinName, price } = req.body;
+    try {
+      await connection.promise().execute('INSERT INTO price_note (username, nazwa_coina, cena) VALUES (?, ?, ?)', [username, coinName, price]);
+      res.status(201).send('Notatka cenowa dodana pomyślnie.');
+    } catch (error) {
+      console.error('Błąd podczas dodawania notatki cenowej:', error);
+      res.status(500).send('Wystąpił błąd podczas dodawania notatki cenowej.');
+    }
+});
+
+app.delete('/api/priceNote/delete', verifyToken, async (req, res) => {
+    const { coinName } = req.body;
+    try {
+      await connection.promise().execute('DELETE FROM price_note WHERE nazwa_coina = ?', [coinName]);
+      res.status(200).send('Notatka cenowa usunięta pomyślnie.');
+    } catch (error) {
+      console.error('Błąd podczas usuwania notatki cenowej:', error);
+      res.status(500).send('Wystąpił błąd podczas usuwania notatki cenowej.');
+    }
+});
+
+
+app.get('/api/priceNote', verifyToken, async (req, res) => {
+    const { username } = req.user;
+    try {
+      const [rows] = await connection.promise().execute('SELECT nazwa_coina AS name, cena AS price FROM price_note WHERE username = ?', [username]);
+      res.json(rows);
+    } catch (error) {
+      console.error('Error fetching favorite coins:', error);
+      res.status(500).send('Error fetching favorite coins.');
+    }
+  });
+
 
 app.get('/api/favorites', verifyToken, async (req, res) => {
     const { username } = req.user;
