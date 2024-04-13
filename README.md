@@ -25,3 +25,10 @@ Access the application through the provided URL.
 Explore current cryptocurrency prices without logging in.
 Log in to access additional features like note-taking and trending prices.
 Enjoy tracking your favorite cryptocurrencies!
+
+![crypto2](https://github.com/BartoszLudera/crypto_app-react/assets/87499282/c26adaeb-33c1-46f0-b265-3e7ecb0fcfbd)
+![crypto1](https://github.com/BartoszLudera/crypto_app-react/assets/87499282/a2ff0f05-79ac-4cb3-a3c7-679360c24157)
+![coin5](https://github.com/BartoszLudera/crypto_app-react/assets/87499282/076a9b24-e3cb-4f98-be2a-cdbfee46460a)
+![coin4](https://github.com/BartoszLudera/crypto_app-react/assets/87499282/1de132e0-460f-4a3c-ac11-56410e5fb52a)
+![coin3](https://github.com/BartoszLudera/crypto_app-react/assets/87499282/ce7f678e-2e25-47c2-b57e-53b6b7f3c152)
+
